@@ -1,6 +1,13 @@
 /* Código simplório, apenas para fornecer o serviço para a aplicação */
 const personList = [];
 
+function make_person(requestBody) {
+  return {
+    ...requestBody,
+    birthdate: new Date(requestBody.birthdate)
+  };
+}
+
 const api = {
   registryPerson(req, res) {
     const person = req.body;
