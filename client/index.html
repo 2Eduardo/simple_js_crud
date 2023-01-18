@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form onsubmit="registryPerson(event)">
+    <p>
+      <label for="name">Full Name:</label>
+      <input type="text" name="name" id="in-name" required>
+      <span id="err-name"></span>
+    </p>
+
+    <p>
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="in-email" required>
+      <span id="err-email"></span>
+    </p>
+
+    <p>
+      <label for="birthdate">Birthdate:</label>
+      <input type="date" name="birthdate" id="in-birthdate" required minlength="8">
+      <span id="err-birthdate"></span>
+    </p>
+
+    <p>
+      <label for="gender">Gender:</label>
+
+      <input type="radio" name="gender" id="in-man" value="man">
+      <label for="in-man">Man</label>
+
+      <input type="radio" name="gender" id="in-woman" value="woman">
+      <label for="in-woman">Woman</label>
+
+      <input type="radio" name="gender" id="in-other" value="other" checked>
+      <label for="in-other">Other</label>
+    </p>
+
+    <p>
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="in-password" required minlength="6">
+    </p>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <div id="people-table">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>E-Mail</th>
+        <th>Birthdate</th>
+        <th>Gender</th>
+      </tr>
+    </table>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
