@@ -1,9 +1,9 @@
 class Person {
-  constructor({ name, birthdate }) {
-    this._name = name;
-    this._birthdate = birthdate;
+  constructor({ name, birthdate, email, gender, password }) {
+    this.name = name;
+    this.birthdate = birthdate;
+    this.email = email;
+    this.gender = gender;
+    this.password = password;
   }
-
-  get birthdate() { return this._birthdate; }
-  get name() { return this._name; }
 };
