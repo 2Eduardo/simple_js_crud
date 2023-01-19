@@ -7,4 +7,7 @@ module.exports = function (app) {
 
   app.route('/person')
     .get(api.getAllPerson);
+
+  app.route('/person/:id')
+    .delete(api.deletePerson);
 };
