@@ -32,6 +32,32 @@ const api = {
 
     res.status(400).json();
   },
+
+  updatePerson(req, res) {
+    const index = personList.findIndex(p => {
+      return p.id === parseInt(req.params.id)
+    });
+
+    if (index == -1) {
+      res.status(404).json("Person not found");
+      return;
+    }
+
+    const newPerson = {
+      ...personList[index],
+      ...req.body,
+    };
+
+    if (personList.find(p =>
+      p.email === newPerson.email && p.id !== newPerson.id)
+    ) {
+      res.status(400).json(`Person with email ${req.body.email} already registered!`);
+      return;
+    }
+
+    personList[index] = newPerson;
+    res.status(200).json(newPerson);
+  }
 };
 
 module.exports = api;
