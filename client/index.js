@@ -17,5 +17,8 @@ function getInputData() {
 
 function registryPerson(event) {
   event.preventDefault();
-  personController.registryPerson(getInputData());
+  personController
+    .registryPerson(getInputData())
+    .then(() => {})
+    .catch(console.log);
 }

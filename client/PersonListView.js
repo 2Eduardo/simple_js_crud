@@ -8,21 +8,22 @@ class PersonListView {
       <table class="table table-hover table-bordered">
         <thead>
           <tr>
-            <th onclick="personController.sortBy('name')">NAME</th>
-            <th onclick="personController.sortBy('birthdate')">BIRTHDATE</th>
-            <th onclick="personController.sortBy('email')">EMAIL</th>
-            <th onclick="personController.sortBy('gender')">GENDER</th>
+            <th></th>
+            <th>NAME</th>
+            <th>BIRTHDATE</th>
+            <th>EMAIL</th>
+            <th>GENDER</th>
           </tr>
         </thead>
           <tbody>
           ${model.people.map(person => `
-                <button onclick="personController.deletePerson(${person})>X</button>
-                <tr>
-                  <td>${person.name}</td>
-                  <td>${DateHelper.dateToString(person.birthdate)}</td>
-                  <td>${person.email}</td>
-                  <td>${person.gender}</td>
-                </tr>`).join('')}
+            <tr>
+              <td><input type="button" onclick="personController.deletePerson('${person.id}')" value="X" /></td>
+              <td>${person.name}</td>
+              <td>${DateHelper.dateToString(person.birthdate)}</td>
+              <td>${person.email}</td>
+              <td>${person.gender}</td>
+            </tr>`).join('')}
           </tbody>
       </table>
     `;

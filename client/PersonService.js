@@ -11,7 +11,14 @@ class PersonService {
       },
       body: JSON.stringify(person)
     });
-    return new Person(res.json());
+
+    if (!res.ok) {
+      const message = await res.json();
+      throw new Error(message);
+    }
+    
+    const personJson = await res.json();
+    return Person.fromJson(personJson);
   }
 
   async readAll() {
@@ -19,12 +26,14 @@ class PersonService {
       method: "get"
     });
     const peopleJson = await res.json();
+    return peopleJson.map(personJson => Person.fromJson(personJson));
+  }
 
-    return peopleJson.map(personJson => {
-      return new Person({
-        ...personJson,
-        birthdate: new Date(personJson.birthdate)
-      });
+  async removeById(personId) {
+    const res = await fetch(`${this.baseUrl}/person/${personId}`, {
+      method: "delete"
     });
+
+    return res.ok;
   }
 };

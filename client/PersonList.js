@@ -8,4 +8,11 @@ class PersonList {
   insert(person) {
     this._people.push(person);
   }
+
+  remove(personId) {
+    const indexToRemove = this._people.findIndex(p => p.id === personId);
+    if (indexToRemove > -1) {
+      this._people.splice(indexToRemove, 1).pop();
+    }
+  }
 };

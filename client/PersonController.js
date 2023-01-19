@@ -8,45 +8,32 @@ class PersonController {
   }
 
   async registryPerson(inputData) {
-    const person = new Person({
-      ...inputData,
-      birthdate: new Date(inputData.birthdate)
-    });
+    const person = Person.fromJson(inputData);
 
     if (!DateHelper.isAdult(person.birthdate)) {
       throw new Error("Must be in age.");
     }
 
-    await this.personService.save(person);
-    this.personList.insert(person);
+    const persistedPerson = await this.personService.save(person);
+    this.personList.insert(persistedPerson);
     this.personListView.update(this.personList);
   }
-  
-  async deletePerson(person) {
-    this.personList.remove(person);
+
+  async deletePerson(personId) {
+    await this.personService.removeById(personId);
+    this.personList.remove(parseInt(personId));
     this.personListView.update(this.personList);
-    await this.personService.remove(person);
   }
 
   async init() {
     const people = await this.personService.readAll();
-    
-    people.forEach(person => {
-      this.personList.insert(person);
-    });
+
+    people
+      .map(p => Person.fromJson(p))
+      .forEach(person => {
+        this.personList.insert(person);
+      });
 
     this.personListView.update(this.personList);
-  }
-
-  orderBy(personProperty) {
-    this.personList.people.sort((person1, person2) => {
-      if (person1[personProperty] > person2[personProperty]) {
-        return 1;
-      } else if (person1[personProperty] === person2[personProperty]) {
-        return 0;
-      } else {
-        return -1;
-      }
-    });
   }
 };
