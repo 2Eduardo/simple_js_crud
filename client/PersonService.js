@@ -16,7 +16,7 @@ class PersonService {
       const message = await res.json();
       throw new Error(message);
     }
-    
+
     const personJson = await res.json();
     return Person.fromJson(personJson);
   }
@@ -35,5 +35,25 @@ class PersonService {
     });
 
     return res.ok;
+  }
+
+  async updateByEmail(personEmail, updatedPerson) {
+    const persons = await this.readAll();
+    const person = persons.find(p => p.email === personEmail);
+    
+    if (!person) {
+      throw new Error(`Person with email ${personEmail} not found!`)
+    }
+
+    const res = await fetch(`${this.baseUrl}/person/${person.id}`, {
+      method: "put",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(updatedPerson)
+    });
+    const updatedPersonJson = await res.json();
+    
+    return Person.fromJson(updatedPersonJson);
   }
 };

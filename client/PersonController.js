@@ -25,6 +25,15 @@ class PersonController {
     this.personListView.update(this.personList);
   }
 
+  async updatePerson(inputData) {
+    const person = Person.fromJson(inputData);
+    const updatedPerson = await this.personService
+      .updateByEmail(person.email, person);
+
+    this.personList.update(updatedPerson.id, updatedPerson);
+    this.personListView.update(this.personList);
+  }
+
   async init() {
     const people = await this.personService.readAll();
 

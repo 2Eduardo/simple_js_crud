@@ -1,7 +1,7 @@
 const $ = document.querySelector.bind(document);
 const personController = new PersonController();
 
-(async() => {
+(async () => {
   await personController.init();
 })();
 
@@ -19,6 +19,13 @@ function registryPerson(event) {
   event.preventDefault();
   personController
     .registryPerson(getInputData())
-    .then(() => {})
+    .then(() => { })
+    .catch(console.log);
+}
+
+function updatePerson() {
+  personController
+    .updatePerson(getInputData())
+    .then(() => { })
     .catch(console.log);
 }

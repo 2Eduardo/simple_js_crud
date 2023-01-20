@@ -15,4 +15,14 @@ class PersonList {
       this._people.splice(indexToRemove, 1).pop();
     }
   }
+
+  update(personId, newPerson) {
+    const personIndex = this._people.findIndex(p => p.id === personId);
+    
+    if (personIndex < 0) {
+      throw new Error(`Person with id ${personId} not found`);
+    }
+
+    this._people[personIndex] = newPerson;
+  }
 };
