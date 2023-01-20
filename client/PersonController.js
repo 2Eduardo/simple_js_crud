@@ -8,25 +8,41 @@ class PersonController {
   }
 
   async registryPerson(inputData) {
-    const person = new Person({
-      ...inputData,
-      birthdate: new Date(inputData.birthdate)
-    });
+    const person = Person.fromJson(inputData);
 
     if (!DateHelper.isAdult(person.birthdate)) {
       throw new Error("Must be in age.");
     }
 
-    await this.personService.save(person);
-    this.personList.insert(person);
+    const persistedPerson = await this.personService.save(person);
+    this.personList.insert(persistedPerson);
+    this.personListView.update(this.personList);
+  }
+
+  async deletePerson(personId) {
+    await this.personService.removeById(personId);
+    this.personList.remove(parseInt(personId));
+    this.personListView.update(this.personList);
+  }
+
+  async updatePerson(inputData) {
+    const person = Person.fromJson(inputData);
+    const updatedPerson = await this.personService
+      .updateByEmail(person.email, person);
+
+    this.personList.update(updatedPerson.id, updatedPerson);
     this.personListView.update(this.personList);
   }
 
   async init() {
     const people = await this.personService.readAll();
-    people.forEach(person => {
-      this.personList.insert(person);
-    });
+
+    people
+      .map(p => Person.fromJson(p))
+      .forEach(person => {
+        this.personList.insert(person);
+      });
+
     this.personListView.update(this.personList);
   }
 };
